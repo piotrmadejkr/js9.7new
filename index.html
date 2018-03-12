@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" />
+        <meta charset="UTF-8">
+        <link rel="stylesheet" type="text/css" href="style.css">
+    </head> 
+    <body>
+        <!--nagłówek - tu nie ma JS -->
+        <div class="container">
+            <h3 class="text-center">
+            Welcome to the game
+            <span class="label label-default">Rock</span>
+            <span class="label label-info">Paper</span>
+            <span class="label label-danger">Scissors</span>
+            </h3>
+        </div>
+        <!--New Game Button= jenda (1) opcja w JS-->
+        <div id="js-newGameElement" class="container">
+            <div class="row text-center">
+              <button  id="js-newGameButton" class="btn btn-default">
+                New game
+              </button>
+            </div>
+          </div>
+        <!--wybór graczy = 3 opcje w JS-->
+          <div id="js-playerPickElement" class="container">
+            <div class="row text-center">
+              <button id="js-playerPick_rock" class="btn">
+                <span class="badge">
+                  <i class="fa fa-hand-rock-o" aria-hidden="true"></i>
+                </span>
+                Rock
+              </button>
+              <button id="js-playerPick_paper"  class="btn">
+                <span class="badge">
+                <i class="fa fa-hand-paper-o" aria-hidden="true"></i>
+                </span>
+                Paper
+              </button>
+              <button id="js-playerPick_scissors"  class="btn">
+                <span class="badge">
+                <i class="fa fa-hand-scissors-o" aria-hidden="true"></i>
+                </span>
+                Scissors
+              </button>
+            </div>
+          </div>
+          <!--Tabela wyników-->
+          <div id="js-resultsTableElement" class="container">
+            <div class="row">
+              <div class="col-xs-5 text-center">
+                  <!--pokazuje punkty gracza-->
+                <span id="js-playerPoints" class="badge">
+                0
+                </span>
+                 <!--pokazuje imię gracza-->
+                <span id="js-playerName">
+                Player Name
+                </span>
+              </div>
+              <div class="col-xs-2 text-center">
+                VS.
+              </div>
+              <div class="col-xs-5 text-center">
+                  <!--pokazuje punkty Komputera - a tu są (chyba) punkty za jedną turę-->
+                <span id="js-computerPoints" class="badge">
+                0
+                </span>
+                <!--pokazuje imię Komputera= JS niepotrzebne, komputer jest zawsze takis sam-->
+                Computer
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-5 text-center">
+                  <!--wybór gracza-->
+                <span id="js-playerPick">
+                  Player selection
+                </span>
+              </div>
+              <div class="col-xs-2"></div>
+              <div class="col-xs-5 text-center">
+                  <!--wybór komputera-->
+                <span id="js-computerPick">
+                  Computer selection
+                </span>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-5 text-center">
+                  <!--rezultat wyboru gracza(??= czyzby ze np kamień? - czy bardziej że punkty)
+                myślę że tutaj będą punkty łączne-->
+                <span id="js-playerResult">
+                  Player Score
+                </span>
+              </div>
+              <div class="col-xs-2"></div>
+              <div class="col-xs-5 text-center">
+                   <!--rezultat wyboru komputera(??= czyzby ze np kamień? - czy bardziej że punkty)-->
+                <span id="js-computerResult">
+                  Computer Score
+                </span>
+              </div>
+            </div>
+          </div>
+    <script type="text/javascript" src="js/scripts.js"></script>
+    </body>
+</html>
