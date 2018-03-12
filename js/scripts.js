@@ -64,9 +64,7 @@ var playerPointsElem = document.getElementById('js-playerPoints'),
 // pobranie wyboru gracza - wywolywane przy nacisneiciu przycisku - picRock np. -powyżej
 
 //definiujemy co jest czym - jak narazie nie wiem czy jest podlaczone do czegokolwiek
-function playerPick(playerPick) {
-    console.log(playerPick);
-}     
+   
 function getComputerPick() {
     var possiblePicks = ['rock', 'paper', 'scissors'];
     return possiblePicks[Math.floor(Math.random()*3)];
@@ -84,6 +82,7 @@ function playerPick(playerPick) {
     computerPickElem.innerHTML = computerPick;  // zdefiniowane powyżej computerPick=getcomputerpick
     checkRoundWinner(playerPick, computerPick);
 }
+playerPick();
 // funkcja na to kto wygrał
 function checkRoundWinner(playerPick, computerPick) {
     playerResultElem.innerHTML = computerResultElem.innerHTML = ''; // usuwa tekst o wygranej kogokolwiek
