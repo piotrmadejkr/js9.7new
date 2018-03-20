@@ -1,19 +1,32 @@
 var newGameBtn = document.getElementById('js-newGameButton');
+var pickRock = document.getElementById('js-playerPick_rock');
+var pickPaper = document.getElementById('js-playerPick_paper');
+var pickScissors = document.getElementById('js-playerPick_scissors');
+//Przypisujemy nasze elementy HTML - konkretnie buttony - do zmiennych
 
-//funkcja new game po nacisnieciuguzika//
+var playerPointsElem = document.getElementById('js-playerPoints');
+var playerNameElem = document.getElementById('js-playerName');
+var computerPointsElem = document.getElementById('js-computerPoints');
+//Przypisujemy kolejne elementy HTML do zmiennych
+
+var newGameElem = document.getElementById('js-newGameElement');
+var pickElem = document.getElementById('js-playerPickElement');
+var resultsElem = document.getElementById('js-resultsTableElement');
+//Przypisujemy kolejne elementy - tym razem kontenery przechowujące informacja o stanie gry
+
+var playerPickElem = document.getElementById('js-playerPick');
+var computerPickElem = document.getElementById('js-computerPick');
+var playerResultElem = document.getElementById('js-playerResult');
+var computerResultElem = document.getElementById('js-computerResult');
+//Przypisujemy kolejne elementy HTML do zmiennych
+
 newGameBtn.addEventListener('click', newGame);
-
-//odnotowuje wcisniecie odpowiedniego buttona przez gracza//
-var pickRock = document.getElementById('js-playerPick_rock'),
-     pickPaper = document.getElementById('js-playerPick_paper'),
-     pickScissors = document.getElementById('js-playerPick_scissors');
-
 pickRock.addEventListener('click', function() { playerPick('rock') });
 pickPaper.addEventListener('click', function() { playerPick('paper') });
 pickScissors.addEventListener('click', function() { playerPick('scissors') });
+//Do zadeklarowanych zmiennych przypisujemy funkcje którę będą odpalać się po kliknięciu - NewGame lub PlayerPick(z zagraniem wybranym przez użytkownika jako parametr przekazywany do funkcji)
 
-var gameState = 'notStarted',  // stan początkowy gry (zawsze zeruje na poczatku) started 
-// ma 3 stany - started, w trakcie, ended - opisujemy to funkcja : setGameElements ; ustalamy obiekty player i computer
+var gameState = 'notStarted',  
     player = {                     
         name: '',
         score: 0
@@ -21,10 +34,7 @@ var gameState = 'notStarted',  // stan początkowy gry (zawsze zeruje na poczatk
     computer = {
         score: 0
     };
-// otagowane containery // - decydujemy ktoy z nich, kiedy się  wyswietla
-    var newGameElem = document.getElementById('js-newGameElement'),
-        pickElem = document.getElementById('js-playerPickElement'),
-        resultsElem = document.getElementById('js-resultsTableElement');
+//Tworzymy nasz bazowy stan gry - Nie rozpoczęta - zerujemy w nim wyniki oraz nick gracza
 
 function setGameElements() {
   switch(gameState) {
@@ -34,7 +44,7 @@ function setGameElements() {
         resultsElem.style.display = 'block';
       break;
     case 'ended':
-        newGameBtn.innerText = 'Jeszcze raz'; // Button New Game zmienia tresc (tylko jakim prawem jest widoczny skoro jego container nie jest)
+        newGameBtn.innerText = 'Jeszcze raz'; // Button New Game zmienia tresc
     case 'notStarted':
     default:
         newGameElem.style.display = 'block'; // container z New game jest widoczny
@@ -42,47 +52,34 @@ function setGameElements() {
         resultsElem.style.display = 'none';
   }
 }
-setGameElements(); 
+//Funkcja która zależnie od Stanu Gry wpływa na wyglad planszy. Warto zwrócić uwagę na to że przy stanie 'Started' jest break czyli wychodzi z funkcji wtedy. Natomiast w przypadku 'Ended' break'a brakuje czyli po wykonaniu tego stanu przejdzie dalej i wejdzie też do 'Default', czyli włączy NewGameEle.
+setGameElements();
 
-//Funkcja New Game
-
-var playerPointsElem = document.getElementById('js-playerPoints'),
-    playerNameElem = document.getElementById('js-playerName'),
-    computerPointsElem = document.getElementById('js-computerPoints');
-
-    function newGame() {
+function newGame() {
         player.name = prompt('Please enter your name', 'imię gracza');
-        if (player.name) {                    // jeśli podał (anuluj jest w promt zawsze)
-          player.score = computer.score = 0;    // zerujemy wynik (co ciekawe GameState- started tez zeruje - dubel?)
+        if (player.name) {                    // Wejdzie do if'a tylko jeżeli ktoś podał imię gracza
+          //player.score = computer.score = 0;   // zerujemy wynik (co ciekawe GameState- started tez zeruje - dubel?)
           gameState = 'started';               // przywracamy zmienna gamstarted
           setGameElements();                   // uruchamiamy setGameElements
       
           playerNameElem.innerHTML = player.name; // zmienia imię na tablicy wyników
-            setGamePoints(); // This function has not been created yet
+          setGamePoints(); // This function has not been created yet
         }
       }
-// pobranie wyboru gracza - wywolywane przy nacisneiciu przycisku - picRock np. -powyżej
 
-//definiujemy co jest czym - jak narazie nie wiem czy jest podlaczone do czegokolwiek
-   
 function getComputerPick() {
-    var possiblePicks = ['rock', 'paper', 'scissors'];
-    return possiblePicks[Math.floor(Math.random()*3)];
+    var possiblePicks = ['rock', 'paper', 'scissors']; //deklarujemy możliwe wybory - jest to tablica [0,1,2]
+    return possiblePicks[Math.floor(Math.random()*3)]; //zwraca 0,1 lub 2 z naszej tablicy więc konkretny wybór
 }
-// maja sie nijak fo playerpick
-var playerPickElem = document.getElementById('js-playerPick'),
-    computerPickElem = document.getElementById('js-computerPick'),
-    playerResultElem = document.getElementById('js-playerResult'),
-    computerResultElem = document.getElementById('js-computerResult');
-// używamy powyższych zmiennych w funkcji : - wyswietla wybór gracza/ losowanie komputera 
+
 function playerPick(playerPick) {
     var computerPick = getComputerPick();
 
-    playerPickElem.innerHTML = playerPick;  // zdefiniowane powyżej 
+    playerPickElem.innerHTML = playerPick;  // zdefiniowane poprzez parametr przekazywany przez clicknięcie buttona 
     computerPickElem.innerHTML = computerPick;  // zdefiniowane powyżej computerPick=getcomputerpick
     checkRoundWinner(playerPick, computerPick);
 }
-playerPick();
+
 // funkcja na to kto wygrał
 function checkRoundWinner(playerPick, computerPick) {
     playerResultElem.innerHTML = computerResultElem.innerHTML = ''; // usuwa tekst o wygranej kogokolwiek
@@ -102,14 +99,34 @@ function checkRoundWinner(playerPick, computerPick) {
       if (winnerIs == 'player') {
           playerResultElem.innerHTML = "Win!";
           player.score++;
+          setGamePoints(); // wpisanie punktów
+          setGameElements(); //sprawdzenie stanu gry
+          endGame(); //sprawdzenie czy nie powinno skończyć gry    
       } else if (winnerIs == 'computer') {
           computerResultElem.innerHTML = "Win!";
           computer.score++;
+          setGamePoints(); // wpisanie punktów
+          setGameElements(); //sprawdzenie stanu gry
+          endGame(); //sprawdzenie czy nie powinno skończyć gry    
       }
-  
   }
-  // nie mam pojecia co to robi - teoretycznie aktualizuej wynik - nie widze roznicy
-  function setGamePoints() {
+
+function setGamePoints() {
     playerPointsElem.innerHTML = player.score;
     computerPointsElem.innerHTML = computer.score;
 }
+//Funkcja wpisuje liczbę punktów do kółeczka
+
+function endGame() {
+	if (player.score == 10) {
+        alert("The winner is " + player.name);
+        gameState = 'ended';
+        setGameElements();
+    } if (computer.score == 10) {
+        alert("The winner is computer");
+        gameState = 'ended';
+        setGameElements();
+    }
+	setGamePoints();
+}
+//Nasza funkcja sprawdzająca kto wygrał - jeżeli któryś z graczy osiągnie 10pkt stan gry jest zmieniany na 'Ended' i wywoływane jest sprawdzenie Stanu Gry
